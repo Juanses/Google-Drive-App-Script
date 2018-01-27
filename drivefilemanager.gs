@@ -1,5 +1,4 @@
-var Driveclass = function(id){
-  this.id = id;
+var Driveclass = function(){
   
   this.getfolder = function (id){
     this.folder = DriveApp.getFolderById(id);
@@ -14,25 +13,16 @@ var Driveclass = function(id){
     this.files = this.folder.getFilesByType(mimetype);
   }
   
-  this.filestoName = function(){
+  this.filedata = function(){
     var solution = [];
-    while (this.files.hasNext()) {
-      var archivo = this.files.next();
-      solution.push(archivo.getName());
+    var local = this.files;
+    while (local.hasNext()) {
+      var archivo = local.next();
+      solution.push([archivo.getId(),archivo.getName()]);
     }
     return solution;
   }
-  
-  this.filestoId = function(){
-    var solution = [];
-    while (this.files.hasNext()) {
-      var archivo = this.files.next();
-      solution.push(archivo.getId());
-    }
-    return solution;
-  }
-  
-  
+   
   this.makesFilesEditableLink = function(idmatrix){
     //https://developers.google.com/apps-script/reference/drive/access
     //https://developers.google.com/apps-script/reference/drive/permission
