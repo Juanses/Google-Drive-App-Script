@@ -34,4 +34,17 @@ var Driveclass = function(){
     }
     return solution;
   }
+  
+  this.moveFile = function(fileid,destinationfolderid){
+  var destinationid = destinationfolderid;
+  var file = DriveApp.getFileById(fileid);
+  var parents = file.getParents();
+  while (parents.hasNext()) {
+    var parent = parents.next();
+    //Logger.log(parent.getName());
+    parent.removeFile(file);
+  }
+  DriveApp.getFolderById(destinationid).addFile(file); 
+}
+  
 }
