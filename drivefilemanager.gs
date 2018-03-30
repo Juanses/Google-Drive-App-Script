@@ -13,6 +13,20 @@ var Driveclass = function(){
     this.files = this.folder.getFilesByType(mimetype);
   }
   
+  
+  this.createFolderinFolder = function (folderid,name){
+    var targetFolder = DriveApp.getFolderById(folderid); 
+    var sourceFolder = DriveApp.createFolder(name);
+    //gdrive.getfolder(folderid);
+    var currentFolders = sourceFolder.getParents();
+    while (currentFolders.hasNext()) {
+      var currentFolder = currentFolders.next();
+      currentFolder.removeFolder(sourceFolder);
+    }
+    targetFolder.addFolder(sourceFolder);
+  }
+  
+  
   this.filedata = function(){
     var solution = [];
     var local = this.files;
@@ -22,7 +36,7 @@ var Driveclass = function(){
     }
     return solution;
   }
-   
+  
   this.makesFilesEditableLink = function(idmatrix){
     //https://developers.google.com/apps-script/reference/drive/access
     //https://developers.google.com/apps-script/reference/drive/permission
@@ -36,15 +50,15 @@ var Driveclass = function(){
   }
   
   this.moveFile = function(fileid,destinationfolderid){
-  var destinationid = destinationfolderid;
-  var file = DriveApp.getFileById(fileid);
-  var parents = file.getParents();
-  while (parents.hasNext()) {
-    var parent = parents.next();
-    //Logger.log(parent.getName());
-    parent.removeFile(file);
+    var destinationid = destinationfolderid;
+    var file = DriveApp.getFileById(fileid);
+    var parents = file.getParents();
+    while (parents.hasNext()) {
+      var parent = parents.next();
+      //Logger.log(parent.getName());
+      parent.removeFile(file);
+    }
+    DriveApp.getFolderById(destinationid).addFile(file); 
   }
-  DriveApp.getFolderById(destinationid).addFile(file); 
-}
   
 }
