@@ -9,6 +9,13 @@ var Driveclass = function(){
     this.files = this.folder.getFilesByType(mimeType);
   }
   
+  this.CopyFileinFolder = function (fileId,destinationfolderId,name){
+    var OriginalFile = DriveApp.getFileById(fileId);
+    var CopyFile = OriginalFile.makeCopy(DriveApp.getFolderById(destinationfolderId));
+    CopyFile.setName(name);
+    return CopyFile;
+  }
+  
   this.getfilesbytype = function(mimetype){
     this.files = this.folder.getFilesByType(mimetype);
   }
@@ -24,6 +31,7 @@ var Driveclass = function(){
       currentFolder.removeFolder(sourceFolder);
     }
     targetFolder.addFolder(sourceFolder);
+    return sourceFolder;
   }
   
   
